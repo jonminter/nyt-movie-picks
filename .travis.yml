@@ -12,4 +12,4 @@ script:
   - cd api
   - ./gradlew build
 after_success:
-  - api/.travis/docker_push.sh
+  - .travis/docker_push.sh
