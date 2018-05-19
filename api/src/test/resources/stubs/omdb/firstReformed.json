@@ -1,0 +1,40 @@
+{
+	"Title": "First Reformed",
+	"Year": "2017",
+	"Rated": "R",
+	"Released": "02 Sep 2017",
+	"Runtime": "108 min",
+	"Genre": "Drama, Thriller",
+	"Director": "Paul Schrader",
+	"Writer": "Paul Schrader",
+	"Actors": "Amanda Seyfried, Ethan Hawke, Cedric the Entertainer, Michael Gaston",
+	"Plot": "A former military chaplain is wracked by grief over the death of his son. Mary is a member of his church whose husband, a radical environmentalist, commits suicide, setting the plot in motion.",
+	"Language": "English",
+	"Country": "USA",
+	"Awards": "1 win & 1 nomination.",
+	"Poster": "https://images-na.ssl-images-amazon.com/images/M/MV5BMGExYzAwMTMtZjcwZC00NGNjLTgyNjgtZmViZWUzMTQzNDhlXkEyXkFqcGdeQXVyMzgwMzczMzU@._V1_SX300.jpg",
+	"Ratings": [
+		{
+			"Source": "Internet Movie Database",
+			"Value": "6.0/10"
+		},
+		{
+			"Source": "Rotten Tomatoes",
+			"Value": "96%"
+		},
+		{
+			"Source": "Metacritic",
+			"Value": "79/100"
+		}
+	],
+	"Metascore": "79",
+	"imdbRating": "6.0",
+	"imdbVotes": "228",
+	"imdbID": "tt6053438",
+	"Type": "movie",
+	"DVD": "N/A",
+	"BoxOffice": "N/A",
+	"Production": "A24",
+	"Website": "N/A",
+	"Response": "True"
+}

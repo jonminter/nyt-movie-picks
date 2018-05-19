@@ -1,6 +1,6 @@
 package com.jonminter.nytmoviepicks;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,11 +15,12 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-public class MovieReviewServiceTest {
+public class MovieRatingsServiceTest {
   MockWebServer mockHttpServer;
   WebClient webClient;
-  MovieReviewsService service;
+  MovieRatingsService service;
 
   @BeforeEach
   public void setUp() throws IOException {
@@ -31,7 +32,7 @@ public class MovieReviewServiceTest {
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
         .build();
     
-    service = new MovieReviewsService(webClient);
+    service = new MovieRatingsService(webClient);
   }
   
   @AfterEach
@@ -41,7 +42,9 @@ public class MovieReviewServiceTest {
   
   @Test
   public void testGetCriticReviews() throws InterruptedException, IOException {
-    String criticReviewsJson = TestUtils.getResourceContents("stubs/nytMovieReviews/criticReviews.json"); 
+    String movieTitle = "First Reformed";
+    
+    String criticReviewsJson = TestUtils.getResourceContents("stubs/omdb/firstReformed.json"); 
         
     MockResponse response = new MockResponse();
     response.setResponseCode(200);
@@ -50,28 +53,18 @@ public class MovieReviewServiceTest {
     
     mockHttpServer.enqueue(response);
     
-    List<MovieReview> expectedReviews = new ArrayList<>(Arrays.asList(
-        MovieReview.builder()
-          .displayTitle("First Reformed")
-          .byline("A. O. SCOTT")
-          .headline("Review: ‘First Reformed’ Is an Epiphany. Ethan Hawke Is, Too.")
-          .build(),
-        MovieReview.builder()
-          .displayTitle("Sollers Point")
-          .byline("GLENN KENNY")
-          .headline("Review: In ‘Sollers Point,’ a Hard Road to the Straight and Narrow")
-          .build()
-    ));
+    MovieRating expectedRating = MovieRating
+        .builder()
+        .imdbRating("7.9")
+        .metascore("77")
+        .build();
     
-    Flux<MovieReview> reviews = service.getCriticPicks();
-    List<MovieReview> reviewList = reviews
-      .collectList()
-      .block();
+    MovieRating actualRating = service.getRatingsForMovie(movieTitle).block();
     
-    assertEquals(expectedReviews, reviewList);
+    assertEquals(expectedRating, actualRating);
     
     RecordedRequest actualRequest = mockHttpServer.takeRequest();
-    assertEquals("/reviews/picks.json?order=-by-publication-date", actualRequest.getPath());
+    assertEquals("/t=First%20Reformed", actualRequest.getPath());
     assertEquals("get", actualRequest.getMethod().toLowerCase());
   }
 }

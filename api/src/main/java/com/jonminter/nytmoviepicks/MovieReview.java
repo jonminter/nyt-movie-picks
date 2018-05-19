@@ -11,7 +11,7 @@ public class MovieReview {
   public String byline;
   public String headline;
 
-  public static Builder build() {
+  public static Builder builder() {
     return new Builder();
   }
 

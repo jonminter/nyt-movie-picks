@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class MovieReviewsService {
-  public static String ORDER_BY_PUBLICATION_DATE="by-publication-date";
+  public static String ORDER_BY_PUBLICATION_DATE="-by-publication-date";
   
   private WebClient webClient;
 
