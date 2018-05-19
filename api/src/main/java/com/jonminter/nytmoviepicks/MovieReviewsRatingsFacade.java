@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+@Service
 public class MovieReviewsRatingsFacade {
   private MovieReviewsService reviewsService;
   private MovieRatingsService ratingsService;

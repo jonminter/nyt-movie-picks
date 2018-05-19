@@ -2,9 +2,11 @@ package com.jonminter.nytmoviepicks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Service
 public class MovieRatingsService {
   private WebClient webClient;
 
@@ -16,7 +18,7 @@ public class MovieRatingsService {
   public Mono<MovieRating> getRatingsForMovie(String movieTitle) {
     return webClient
         .get()
-        .uri("/t={title}", movieTitle)
+        .uri("/?t={title}", movieTitle)
         .exchange()
         .flatMap(res -> res.bodyToMono(MovieRating.class));
   }

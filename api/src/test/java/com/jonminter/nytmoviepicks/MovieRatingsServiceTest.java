@@ -59,7 +59,7 @@ public class MovieRatingsServiceTest {
     assertEquals(expectedRating, actualRating);
     
     RecordedRequest actualRequest = mockHttpServer.takeRequest();
-    assertEquals("/t=First%20Reformed", actualRequest.getPath());
+    assertEquals("/?t=First%20Reformed", actualRequest.getPath());
     assertEquals("get", actualRequest.getMethod().toLowerCase());
   }
 }

@@ -115,15 +115,15 @@ tasks.withType(FindBugs) {
     }
 }
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.6
-            }
-        }
-    }
-}
+//jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.6
+//            }
+//        }
+//    }
+//}
 
 
 jacocoTestReport {
@@ -134,7 +134,7 @@ jacocoTestReport {
     }
 }
 
-check.dependsOn jacocoTestCoverageVerification
+//check.dependsOn jacocoTestCoverageVerification
 
 
 dependencies {
