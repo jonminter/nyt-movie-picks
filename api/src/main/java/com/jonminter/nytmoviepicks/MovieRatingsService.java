@@ -14,6 +14,10 @@ public class MovieRatingsService {
   }
 
   public Mono<MovieRating> getRatingsForMovie(String movieTitle) {
-    return null;
+    return webClient
+        .get()
+        .uri("/t={title}", movieTitle)
+        .exchange()
+        .flatMap(res -> res.bodyToMono(MovieRating.class));
   }
 }

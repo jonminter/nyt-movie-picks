@@ -55,8 +55,8 @@ public class MovieRatingsServiceTest {
     
     MovieRating expectedRating = MovieRating
         .builder()
-        .imdbRating("7.9")
-        .metascore("77")
+        .imdbRating("6.0")
+        .metascore("79")
         .build();
     
     MovieRating actualRating = service.getRatingsForMovie(movieTitle).block();
