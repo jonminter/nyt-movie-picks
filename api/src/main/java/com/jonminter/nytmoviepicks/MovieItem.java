@@ -24,7 +24,7 @@ public class MovieItem {
       return this;
     }
 
-    public Builder imdbRating(MovieRating rating) {
+    public Builder rating(MovieRating rating) {
       item.rating = rating;
       return this;
     }
