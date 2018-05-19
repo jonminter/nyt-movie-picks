@@ -2,9 +2,6 @@ package com.jonminter.nytmoviepicks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +11,6 @@ import com.google.common.net.HttpHeaders;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 public class MovieRatingsServiceTest {
   MockWebServer mockHttpServer;

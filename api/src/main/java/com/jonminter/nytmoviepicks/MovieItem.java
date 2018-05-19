@@ -2,7 +2,6 @@ package com.jonminter.nytmoviepicks;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MovieItem {
   public MovieReview review;
