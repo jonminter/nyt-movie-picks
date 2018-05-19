@@ -50,7 +50,6 @@ public class MovieReviewsRatingsFacadeTest {
     when(ratingsService.getRatingsForMovie(thorTitle)).thenReturn(Mono.just(thorRating));
     
     List<MovieItem> items = reviewsAndRatings.getCriticReviewsAndRatings()
-        .collectList()
         .block();
     
     List<MovieItem> expectedItems = new ArrayList<>(Arrays.asList(
