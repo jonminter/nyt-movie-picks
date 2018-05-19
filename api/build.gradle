@@ -36,6 +36,11 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	baseName = "nyt-movie-picks"
+	version = "0.1.0"
+}
+
 jacoco {
     toolVersion = '0.7.9'
     applyTo junitPlatformTest
