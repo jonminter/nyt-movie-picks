@@ -1,0 +1,149 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		jcenter()
+        maven {
+          url 'https://repo.spring.io/libs-release'
+          url "https://plugins.gradle.org/m2/"
+          url 'https://jitpack.io'
+        }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('org.junit.platform:junit-platform-gradle-plugin:1.1.0')
+        classpath('com.kncept.junit5.reporter:junit-reporter:1.1.0')
+	}
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'com.kncept.junit5.reporter'
+apply plugin: 'findbugs'
+
+group = 'co.jonminter'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+jacoco {
+    toolVersion = '0.7.9'
+    applyTo junitPlatformTest
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/reports/coverage")
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/Main*', '**/config/*'])
+        })
+    }
+}
+
+junitPlatformTest {
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
+}
+
+test {
+	//useJUnitPlatform {
+		// includeEngines 'junit-jupiter', 'junit-vintage'
+		// excludeEngines 'custom-engine'
+		// includeTags 'fast'
+	//	excludeTags 'slow'
+	//}
+
+	testLogging {
+		events 'passed', 'skipped', 'failed'
+	}
+
+	reports {
+		html.enabled = true
+	}
+	finalizedBy jacocoTestReport
+}
+
+junitHtmlReport {
+	// If true, then instead of producing multiple reports per test folder (test run), 
+	// aggregate them all together into the test-reports root directory.
+	//
+	// Also use this if all your test results end up directly in the test-results directory
+	aggregated = false
+
+	//RAG status css overrides
+
+	cssRed = 'red'
+	cssAmber = 'orange'
+	cssGreen = 'green'
+	//Processing directories
+	testResultsDir = 'test-results'
+	testReportsDir = 'reports/tests'
+	
+	//Fail build when no XML files to process
+	failOnEmpty = true
+}
+
+findbugs {
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.6
+            }
+        }
+    }
+}
+
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco")
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-hateoas')
+	compile('io.springfox:springfox-swagger2:2.8.0')
+	compile('io.springfox:springfox-swagger-ui:2.8.0')
+	compile('org.springframework:spring-webflux:5.0.6.RELEASE')
+	compile('org.apache.commons:commons-lang3:3.7')
+	compile('io.projectreactor.ipc:reactor-netty:0.7.7.RELEASE')
+	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
+	testCompile('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+	testCompile('com.squareup.okhttp:mockwebserver:2.7.5')
+	testCompile('com.squareup.okhttp3:mockwebserver:3.10.0')
+}
