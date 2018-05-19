@@ -2,7 +2,10 @@ package com.jonminter.nytmoviepicks;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class MovieReview {
   public String displayTitle;
   public String byline;
@@ -67,7 +70,6 @@ public class MovieReview {
     }
     MovieReview other = (MovieReview) obj;
     return new EqualsBuilder()
-        .appendSuper(super.equals(obj))
         .append(displayTitle, other.displayTitle)
         .append(byline, other.byline)
         .append(headline, other.headline)
