@@ -20,6 +20,7 @@ public class MovieReviewsAndRatingsController {
   
   @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<MovieItem>> getCriticReviewsAndRatings() {
-    return null;
+    List<MovieItem> items = reviewsAndRatings.getCriticReviewsAndRatings().block();
+    return ResponseEntity.ok(items);
   }
 }
