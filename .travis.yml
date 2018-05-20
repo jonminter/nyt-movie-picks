@@ -18,3 +18,4 @@ script:
   - ./gradlew build
 after_success:
   - .travis/docker_push.sh
+  - .travis/docker_deploy.sh
