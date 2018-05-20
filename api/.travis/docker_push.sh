@@ -11,6 +11,10 @@ if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     export PATH=$PATH:$PY_USER_BIN
     eval $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
 
+    # Create application.properties
+    echo "Creating application.properties..."
+    eval "echo \"$(cat config/application.properties.example)\"" > ./config/application.properties
+
     # Build and push
     echo "Building IMAGE_NAME=$IMAGE_NAME"
     docker build -t $IMAGE_NAME .
