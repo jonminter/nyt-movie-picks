@@ -37,4 +37,5 @@ matrix:
         bucket: co.jonminter.nyt-movie-picks-www
         skip_cleanup: true
         local_dir: dist/nyt-movie-picks-ui
+        acl: public_read
     
