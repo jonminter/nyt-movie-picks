@@ -17,7 +17,7 @@ if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
 
     # Build and push
     echo "Building IMAGE_NAME=$IMAGE_NAME"
-    docker build -t $IMAGE_NAME .
+    docker build --build-arg "JAR_FILE=build/libs/nyt-movie-picks-0.0.1-SNAPSHOT.jar" -t $IMAGE_NAME .
     echo "Tagging $IMAGE_NAME:latest $REMOTE_IMAGE_URL:latest"
     docker tag $IMAGE_NAME:latest "$REMOTE_IMAGE_URL:latest"
     echo "Pushing $IMAGE_NAME:latest"
