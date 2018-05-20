@@ -1,5 +1,7 @@
 # nyt-movie-picks
 
+Mashup of [NYT API](https://developer.nytimes.com/)/[OMDB API](http://omdbapi.com/).
+
 Display most recent NYT critic movie picks and the associated IMDB/Metascore ratings.
 
 ## Demo
