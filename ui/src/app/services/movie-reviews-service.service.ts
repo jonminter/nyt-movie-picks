@@ -12,7 +12,7 @@ export class MovieReviewsServiceService {
   constructor(private httpClient: HttpClient) { }
 
   getCriticReviewsAndRatings(): Observable<Array<MovieItem>> {
-    console.log('API call URL = ', environment.apiBaseUrl + 'critic-reviews-with-ratings');
-    return this.httpClient.get<Array<MovieItem>>(environment.apiBaseUrl + 'critic-reviews-with-ratings');
+    console.log('API call URL = ', environment.apiBaseUrl + 'v1/critic-reviews-with-ratings');
+    return this.httpClient.get<Array<MovieItem>>(environment.apiBaseUrl + 'v1/critic-reviews-with-ratings');
   }
 }

@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  apiDocsUrl: string = environment.apiBaseUrl + 'api-docs';
+  apiBaseUrl: string = environment.apiBaseUrl;
   movies: Array<MovieItem>;
 
   constructor(private reviewService: MovieReviewsServiceService) {
