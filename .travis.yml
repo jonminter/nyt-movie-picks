@@ -22,10 +22,12 @@ matrix:
         - .travis/docker_push.sh
         - .travis/docker_deploy.sh
     - language: node
-      before_script:
+      node_js:
+        - 8
+      before_install:
         - cd ui
+      before_script:
         - npm install -g @angular/cli
-        - npm install
       script:
         - ng build --prod
       deploy:
