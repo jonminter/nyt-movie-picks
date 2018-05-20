@@ -1,7 +1,10 @@
 package com.jonminter.nytmoviepicks;
 
+import java.time.LocalDate;
+import java.util.Map;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -10,6 +13,20 @@ public class MovieReview {
   public String displayTitle;
   public String byline;
   public String headline;
+  public LocalDate publicationDate;
+  public LocalDate openingDate;
+  public String articleUrl;
+  public String imageUrl;
+  
+  @JsonProperty("link")
+  private void unpackArticleUrl(Map<String, String> article) {
+    articleUrl = article.get("url");
+  }
+  
+  @JsonProperty("multimedia")
+  private void unpackImageUrl(Map<String, String> multimedia) {
+    imageUrl = multimedia.get("src");
+  }
 
   public static Builder builder() {
     return new Builder();

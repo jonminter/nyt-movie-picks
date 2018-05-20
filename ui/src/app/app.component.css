@@ -1,0 +1,19 @@
+.dates {
+    font-size: 0.75rem;
+}
+
+i.rating-icon {
+    font-size: 2em;
+}
+img.rating-icon {
+    width: 2em;
+}
+
+ul.ratings {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul.ratings li {
+    padding-bottom: 1em;
+}

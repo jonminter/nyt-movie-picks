@@ -3,10 +3,14 @@ package com.jonminter.nytmoviepicks;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class MovieRating {
   @JsonProperty("Metascore")
   public String metascore;
+  @JsonProperty("imdbRating")
   public String imdbRating;
   
   public static Builder builder() {

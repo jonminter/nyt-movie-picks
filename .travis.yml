@@ -1,5 +1,4 @@
 sudo: required
-language: java
 env:
   global:
     - AWS_DEFAULT_REGION=us-east-1
@@ -11,11 +10,29 @@ env:
     - secure: "mDsSWw4kWs5RWY6ULDWQNTJ8osuPDoljDdT6gFcIF5METuZ4IuBSngr81QAAgl0Em8QtqKCBqKpjINkWqo2sbqo/YRjI1bVHfMti6GEOvlcxaiuivKuH7W7JGwu1oo9cOBrDNCXbwYPb3NC5DQXZxrViLMXZlBfWPiA9Ye3AByuv9b4MmhiCGTqXVh1Xy2aHZnC5Nna/LvjDBQ4TJGxuxWPLZ44wJ+Iz2WEv5Y3e2ZC7ohTFwCi8rJnd2FmBUfFGYRqoO831tVntqLln/Jz7xV+EjNv6uTtG9XClAs9lMyVcbT2mpqNfDHA9nKELgtt8no5Az287O+1FiyplWa8o8izUJcIIlVZPOhWvFpl677ch0x6uGwcqSXfEG5V1d006b74NLiTbJVWmKZOuLiRAid2rjl9Zp7SSEbNoUhuG9w8qhHKiTqb33mTkECPrrowgRW8GJ8KqdAEj50uXUt+h9Z4biYjQbj1lFQqXpaNGnBvO6+RerRTZpQlqxmw1F6nxX3Tqaz4ljOoB932H89gYQm7P4o9lvA1C7lB6dleS42Gwfbh3itqrAI+yukqZUVA3HBoDeElph1rlW2m6gyTJ4DBXxO7StN5eDhlEsSromn2fAIg91NY2K4UEyDb4xOqtfTGctPabAtz6WhjVTKVpX2oRxbXVnjED8V6z5eGHnd8="
     - secure: "l+nEx0/oO+/0ljR167PpvW3mvhu8J/WSOGUogB4NSheZyRVBVxemvFUf32+bzJijjtI1C7ODbkGvQ+EcYCCiIi+675UPBPDKlggMh8uo3e5v/RDSHid4vmnunR2zqX830nEeDpTv+l33nPD2fruUam3QjtZF3QDSnXq87FABq5hu4535kzilpe457y2T8f6xqTvccJPiLoqQCDaWfpvSvvg1lubsjR6h+BUT4d13GPjE7mXNCCGPAKrCWWCQxhaYKkm2lmQ3ARE+CjIIEDlDpb4lf4lNK7fxt+iTcBZlzeWvyE62RvVjWhMWW4AtloQpt5Vrw5+HmoTKt+XjxwZNiU1Qh544IxM+nOtoKPxtg8XSih8OYVg0hHgZCRffB44l1BuaoVRtKzte1LScjr6qqusbY2e9n3ZWojVxZ2eCXgiZTbiw2LkGaYL+iIr015BKPSptDyARgOJ9KdnZj2K9yeDvRLLVkdkHxil6h1KejT5zT9GO9eW5RrBWOl9pGBDVmL0BUofsyWFID4iy658cNk6r4L312/q+lmtvSAExSLsBmeC2nOwmTsZmVW1vktgq5HhGVB2Li0gAdiaKEpHj6yt8QeqNTqvVwmPcjdmuVlunJU4bNbmKb1m8l3Yk7ZHZwtBZLFnGttyzotKdQVf/zLlrxx5bSFkwPV5dL5hdSaY="
     - secure: "R1+SfUEjp1krQG6cOGTqS3eiATdLVggOpTB8xaCz/UcnD7DyBnUDFe+1FpKahHQfptQcI46jkHUFtcUl1o796zr9amPJh9FD3KTqvUtz9vHfQNOJGigJh/1JHxbVW71/UYN0sxAAEFEIG1rL2NnIgSDjn1ielSrKtKgzvZ1V9sWWuHIrx/baRp3sD848ZWqsE0KPjuby0lVe3vz3ymLlTPIYZg0MAd+3hfKkb2bT+a6hRT9YG3tEVuxpuA8QLhZ5to3BH9FfPUHFcLBNxMmQjZkOleLqMVXHE5+ynrWbBAmkmN4yxQRZfIdz4pFgTOvB36GgF07DdTUaDhpCTR5Ieuhujts6oEWceF6I4Pp0f2ehytRykDNckzk8gM0N0g9Xu//UlHG3V6x2df/8IeIAbaDTNSfYYURNYYvfWHkbK0Z1GbStdFd1FMnW65wgsWc0/bfLaq7mMX9AnbdgZxfvoZuk5dzwIOF53UfvdLcmspiPp52hUv2nABA0Epy6G0TjKi9CmITjOVytDv//9lHXtk5HJLQp1rm0hWsRdGBRzF39WKpgfHQSAMmWRl50WyZCg+NuQ/+nqt6n7AQBbv/lZ/WG8oN8pQjd55znUc6FDTnqKa4c029D3etbyJCoXvkGliyCGNmNRbkUQrsOffjQjMGMt8ZuKME/rk5FjuuW0kY="
-services:
-  - docker
-script:
-  - cd api
-  - ./gradlew build
-after_success:
-  - .travis/docker_push.sh
-  - .travis/docker_deploy.sh
+matrix:
+  include:
+    - language: java
+      services:
+        - docker
+      script:
+        - cd api
+        - ./gradlew build
+      after_success:
+        - .travis/docker_push.sh
+        - .travis/docker_deploy.sh
+    - language: node
+      before_script:
+        - cd ui
+        - npm install -g @angular/cli
+        - npm install
+      script:
+        - ng build --prod
+      deploy:
+        provider: s3
+        access_key_id: $AWS_ACCESS_KEY_ID
+        secret_access_key: $AWS_SECRET_ACCESS_KEY
+        bucket: co.jonminter.nyt-movie-picks-www
+        skip_cleanup: true
+        local_dir: ui/dist
+    
