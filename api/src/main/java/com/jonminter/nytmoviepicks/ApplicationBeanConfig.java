@@ -53,8 +53,8 @@ public class ApplicationBeanConfig {
   
   private static ExchangeFilterFunction logRequest() {
     return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
-        logger.info("Request: {} {}", clientRequest.method(), clientRequest.url());
-        clientRequest.headers().forEach((name, values) -> values.forEach(value -> logger.info("{}={}", name, value)));
+        logger.debug("Request: {} {}", clientRequest.method(), clientRequest.url());
+        clientRequest.headers().forEach((name, values) -> values.forEach(value -> logger.debug("{}={}", name, value)));
         return Mono.just(clientRequest);
     });
 }

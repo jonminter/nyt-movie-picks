@@ -1,7 +1,9 @@
 package com.jonminter.nytmoviepicks;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,11 +57,19 @@ public class MovieReviewServiceTest {
           .displayTitle("First Reformed")
           .byline("A. O. SCOTT")
           .headline("Review: ‘First Reformed’ Is an Epiphany. Ethan Hawke Is, Too.")
+          .publicationDate(LocalDate.parse("2018-05-17"))
+          .openingDate(LocalDate.parse("2018-05-18"))
+          .articleUrl("http://www.nytimes.com/2018/05/17/movies/first-reformed-review-paul-schrader-ethan-hawke.html")
+          .imageUrl("https://static01.nyt.com/images/2018/05/18/arts/18firstreformed/18firstreformed-mediumThreeByTwo210.jpg")
           .build(),
         MovieReview.builder()
           .displayTitle("Sollers Point")
           .byline("GLENN KENNY")
           .headline("Review: In ‘Sollers Point,’ a Hard Road to the Straight and Narrow")
+          .publicationDate(LocalDate.parse("2018-05-17"))
+          .openingDate(LocalDate.parse("2018-05-18"))
+          .articleUrl("http://www.nytimes.com/2018/05/17/movies/sollers-point-review.html")
+          .imageUrl("https://static01.nyt.com/images/2018/05/18/arts/18sollers1/sollers1-mediumThreeByTwo210.jpg")
           .build()
     ));
     
@@ -68,7 +78,9 @@ public class MovieReviewServiceTest {
       .collectList()
       .block();
     
-    assertEquals(expectedReviews, reviewList);
+    assertEquals(2, reviewList.size());
+    assertThat(reviewList.get(0)).isEqualToComparingFieldByField(expectedReviews.get(0));
+    assertThat(reviewList.get(1)).isEqualToComparingFieldByField(expectedReviews.get(1));
     
     RecordedRequest actualRequest = mockHttpServer.takeRequest();
     assertEquals("/reviews/picks.json?order=-by-publication-date", actualRequest.getPath());

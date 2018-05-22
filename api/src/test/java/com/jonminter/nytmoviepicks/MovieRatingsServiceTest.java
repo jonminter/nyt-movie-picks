@@ -1,5 +1,6 @@
 package com.jonminter.nytmoviepicks;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import org.junit.jupiter.api.AfterEach;
@@ -36,15 +37,15 @@ public class MovieRatingsServiceTest {
   }
   
   @Test
-  public void testGetCriticReviews() throws InterruptedException, IOException {
+  public void testGetRatings() throws InterruptedException, IOException {
     String movieTitle = "First Reformed";
     
-    String criticReviewsJson = TestUtils.getResourceContents("stubs/omdb/firstReformed.json"); 
+    String ratingJson = TestUtils.getResourceContents("stubs/omdb/firstReformed.json"); 
         
     MockResponse response = new MockResponse();
     response.setResponseCode(200);
     response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-    response.setBody(criticReviewsJson);
+    response.setBody(ratingJson);
     
     mockHttpServer.enqueue(response);
     
@@ -56,7 +57,7 @@ public class MovieRatingsServiceTest {
     
     MovieRating actualRating = service.getRatingsForMovie(movieTitle).block();
     
-    assertEquals(expectedRating, actualRating);
+    assertThat(actualRating).isEqualToComparingFieldByField(expectedRating);
     
     RecordedRequest actualRequest = mockHttpServer.takeRequest();
     assertEquals("/?t=First%20Reformed", actualRequest.getPath());

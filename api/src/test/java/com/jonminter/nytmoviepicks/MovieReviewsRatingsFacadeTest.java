@@ -1,5 +1,6 @@
 package com.jonminter.nytmoviepicks;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class MovieReviewsRatingsFacadeTest {
           .rating(thorRating)
           .build()));
     
-    assertEquals(expectedItems, items);
+    assertEquals(2, items.size());
+    assertThat(items.get(0)).isEqualToComparingFieldByField(expectedItems.get(0));
+    assertThat(items.get(1)).isEqualToComparingFieldByField(expectedItems.get(1));
   }
 }

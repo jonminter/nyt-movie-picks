@@ -2,11 +2,11 @@ package com.jonminter.nytmoviepicks;
 
 import java.time.LocalDate;
 import java.util.Map;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.google.common.base.MoreObjects;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class MovieReview {
@@ -53,6 +53,26 @@ public class MovieReview {
       review.headline = headline;
       return this;
     }
+    
+    public Builder publicationDate(LocalDate publicationDate) {
+      review.publicationDate = publicationDate;
+      return this;
+    }
+    
+    public Builder openingDate(LocalDate openingDate) {
+      review.openingDate = openingDate;
+      return this;
+    }
+    
+    public Builder articleUrl(String articleUrl) {
+      review.articleUrl = articleUrl;
+      return this;
+    }
+    
+    public Builder imageUrl(String imageUrl) {
+      review.imageUrl = imageUrl;
+      return this;
+    }
 
     public MovieReview build() {
       return review;
@@ -61,17 +81,16 @@ public class MovieReview {
   
   @Override
   public String toString() {
-    return String.format("%s {displayTitle=%s, byline=%s, headline=%s}",
-        super.toString(), displayTitle, byline, headline);
+    return MoreObjects.toStringHelper(this)
+        .add("displayTitle", displayTitle)
+        .add("byline", byline)
+        .add("headline", headline)
+        .toString();
   }
   
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(19, 29).
-      append(displayTitle).
-      append(byline).
-      append(headline).
-      toHashCode();
+    return Objects.hash(displayTitle, byline, headline);
   }
 
   @Override
@@ -86,10 +105,8 @@ public class MovieReview {
       return false;
     }
     MovieReview other = (MovieReview) obj;
-    return new EqualsBuilder()
-        .append(displayTitle, other.displayTitle)
-        .append(byline, other.byline)
-        .append(headline, other.headline)
-        .isEquals();
+    return Objects.equals(displayTitle, other.displayTitle) &&
+        Objects.equals(byline, other.byline) &&
+        Objects.equals(headline, other.headline);
   }
 }

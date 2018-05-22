@@ -1,10 +1,10 @@
 package com.jonminter.nytmoviepicks;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.google.common.base.MoreObjects;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class MovieRating {
@@ -41,16 +41,15 @@ public class MovieRating {
   
   @Override
   public String toString() {
-    return String.format("%s {metascore=%s, imdbRating=%s}",
-        super.toString(), metascore, imdbRating);
+    return MoreObjects.toStringHelper(this)
+        .add("metascore", metascore)
+        .add("imdbRating", imdbRating)
+        .toString();
   }
   
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(11, 47).
-      append(metascore).
-      append(imdbRating).
-      toHashCode();
+    return Objects.hash(metascore, imdbRating);
   }
 
   @Override
@@ -65,9 +64,7 @@ public class MovieRating {
       return false;
     }
     MovieRating other = (MovieRating) obj;
-    return new EqualsBuilder()
-        .append(metascore, other.metascore)
-        .append(imdbRating, other.imdbRating)
-        .isEquals();
+    return Objects.equals(metascore, other.metascore) &&
+        Objects.equals(imdbRating, other.imdbRating);
   }
 }

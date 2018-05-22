@@ -1,7 +1,7 @@
 package com.jonminter.nytmoviepicks;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
+import com.google.common.base.MoreObjects;
 
 public class MovieItem {
   public MovieReview review;
@@ -35,16 +35,15 @@ public class MovieItem {
   
   @Override
   public String toString() {
-    return String.format("%s {review=%s, rating=%s}",
-        super.toString(), review, rating);
+    return MoreObjects.toStringHelper(this)
+        .add("review", review)
+        .add("rating", rating)
+        .toString();
   }
   
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(31, 41).
-      append(review).
-      append(rating).
-      toHashCode();
+    return Objects.hash(review, rating);
   }
 
   @Override
@@ -59,9 +58,7 @@ public class MovieItem {
       return false;
     }
     MovieItem other = (MovieItem) obj;
-    return new EqualsBuilder()
-        .append(review, other.review)
-        .append(rating, other.rating)
-        .isEquals();
+    return Objects.equals(review, other.review) &&
+        Objects.equals(rating, other.rating);
   }
 }
