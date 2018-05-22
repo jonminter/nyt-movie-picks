@@ -23,25 +23,26 @@
       <img class="card-img-top" [src]="movie.review.image_url" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{movie.review.display_title}}</h5>
-        <div class="card-title">
-          by {{movie.review.byline}}
-          <p class="dates">
-              Published {{movie.review.publication_date | amDateFormat:'LL'}}
+        <div class="card-text">
+          <div>
+            by <span class="author">{{movie.review.byline}}</span>
+            <p class="dates">
+                Published <span class="publish-date">{{movie.review.publication_date | amDateFormat:'LL'}}</span>
             </p>
-        </div>
-        
-        <p class="card-text">{{movie.review.headline}}</p>
-        <ul class="ratings">
-          <li *ngIf="movie.rating.imdbRating != 'N/A'"><i class="fab fa-imdb imdb-icon rating-icon"></i> {{movie.rating.imdbRating}}/10</li>
-          <li *ngIf="movie.rating.Metascore != 'N/A'"><img class="metascore-icon rating-icon" src="assets/metacritic.svg"> {{movie.rating.Metascore}}</li>
-        </ul>
+          </div>
+          <p class="review-summary">{{movie.review.headline}}</p>
+          <ul class="ratings">
+            <li *ngIf="movie.rating.imdbRating != 'N/A'"><i class="fab fa-imdb imdb-icon rating-icon"></i> <span class="imdb">{{movie.rating.imdbRating}}</span>/10</li>
+            <li *ngIf="movie.rating.Metascore != 'N/A'"><img class="metascore-icon rating-icon" src="assets/metacritic.svg"> <span class="metascore">{{movie.rating.Metascore}}</span></li>
+          </ul>
 
-        <p class="opens alert alert-secondary" role="alert" *ngIf="movie.review.opening_date">
-            Opening day {{movie.review.opening_date | amDateFormat:'LL'}}
-        </p>
+          <p class="opens alert alert-secondary" role="alert" *ngIf="movie.review.opening_date">
+              Opening day <span class="opening-date">{{movie.review.opening_date | amDateFormat:'LL'}}</span>
+          </p>
+        </div>
       </div>
       <div class="card-footer text-right">
-        <a [href]="movie.review.article_url" target="_blank" class="btn btn-primary">Read Review</a>
+        <a [href]="movie.review.article_url" target="_blank" class="btn btn-primary read-review">Read Review</a>
       </div>
     </div>
   </div>
